@@ -1,0 +1,14 @@
+{
+  "name": "express-tutorial",
+  "version": "1.0.0",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "cors": "^2.8.4",
+    "ejs": "^2.6.1",
+    "express": "^4.13.4",
+    "express-session": "^1.15.6",
+    "fs": "0.0.1-security",
+    "jquery": "^3.3.1",
+    "mysql": "^2.11.1"
+  }
+}

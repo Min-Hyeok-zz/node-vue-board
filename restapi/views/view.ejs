@@ -1,0 +1,14 @@
+<% include ./header.ejs %>
+
+<a href="/">메인으로</a>
+
+<fieldset><legend>글보기 페이지</legend>
+	<p>작성자 : <%= writer %></p>
+	<p>제목 : <%= subject %></p>
+	<div>
+		내용 : <%= content %>
+	</div>
+	<p>작성일 : <%= date %></p>
+</fieldset>
+
+<% include ./footer.ejs %>

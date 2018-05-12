@@ -1,0 +1,12 @@
+<% include ./header.ejs %>
+
+<form action="" method="post">
+	<input type="hidden" name="action" value="insert">
+	<input type="text" name="writer" placeholder="작성자" required>
+	<input type="text" name="subject" placeholder="글제목" required>
+	<textarea name="content" cols="30" rows="10" required placeholder="글내용"></textarea>
+	<button type="submit">글작성</button>
+</form>
+<a href="/">메인으로</a>
+
+<% include ./footer.ejs %>
