@@ -5,6 +5,7 @@ import Test from '@/components/Test'
 import BoardList from '@/components/board/list'
 import BoardView from '@/components/board/view'
 import BoardAdd from '@/components/board/add'
+import BoardUpdate from '@/components/board/update'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/board/add',
       name: 'BoardAdd',
       component: BoardAdd
+    },
+    {
+      path: '/board/update/:idx',
+      name: 'BoardUpdate',
+      component: BoardUpdate
     }
   ]
 })

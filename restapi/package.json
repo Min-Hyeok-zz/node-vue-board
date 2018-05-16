@@ -9,6 +9,7 @@
     "express-session": "^1.15.6",
     "fs": "0.0.1-security",
     "jquery": "^3.3.1",
-    "mysql": "^2.11.1"
+    "mysql": "^2.11.1",
+    "vue-cli": "^2.9.3"
   }
 }

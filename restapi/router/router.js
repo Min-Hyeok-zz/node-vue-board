@@ -27,7 +27,7 @@ module.exports = (app,fs) =>{
 		})
 	})
 
-	app.get('/#/board/delete/:idx.',(req,res) =>{
+	app.get('/#/board/delete/:idx',(req,res) =>{
 		res.send('<script>alert("삭제입니다");</script>')
 		// const idx = req.params.idx;
 		// const sql = `DELETE FROM board where idx='${idx}'`
@@ -41,13 +41,13 @@ module.exports = (app,fs) =>{
 		res.render("login",{
 			title:"로그인 페이지",
 		})
-	})
+    })
 
-	app.get('/join',(req,res) =>{
-		res.render("join",{
-			title:"회원가입 페이지"
-		})
-	})
+    app.get('/join',(req,res) =>{
+      res.render("join",{
+        title:"회원가입 페이지"
+      })
+    })
 
 	app.post('/join',(req,res) =>{
 		const mb_id = req.body.mb_id;
@@ -100,16 +100,25 @@ module.exports = (app,fs) =>{
 			res.json(results)
 		})
 	})
-	
 
-	// app.post('/write', (req,res) => {
-	// 	const writer = req.body.writer;
-	// 	const subject = req.body.subject;
-	// 	const content = req.body.content;
-	// 	const sql = `INSERT INTO board set writer="${writer}",subject="${subject}",content="${content}",date=now()`;
-	// 	con.query(sql,(err,results)=>{
-	// 		res.send('<script>alert("완료되었습니다.");</script>');
-	// 	})
-	// })
+	app.get('/board/update/:idx',(req,res) => {
+		const idx = req.params.idx;
+		const sql = `SELECT * FROM board where idx='${idx}'`
+		con.query(sql,(err,results) =>{
+			res.json(results)
+		}) 
+	})
+
+	app.post('/board/update/:idx',(req,res) => {
+		const writer = req.body.writer;
+		const subject = req.body.subject;
+		const content = req.body.content;
+		const idx = req.params.idx;
+		const sql = `UPDATE board set writer='${writer}',subject='${subject}',content='${content}',date=now() where idx='${idx}'`;
+		console.log(sql)
+		con.query(sql,(err,results) => {
+			res.json(results)
+		})
+	})
 
 }

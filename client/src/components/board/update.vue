@@ -1,49 +1,47 @@
 <template>
   <div class="hello">
-    <h1>글 보기 페이지</h1>
+    <h1>글 수정 페이지</h1>
     <hr>
-    <template v-if="view != null">
-        <h3>제목 : {{view.subject}}</h3>
-        <p>작성자 : {{view.writer}}</p>
-        <p>작성일 : {{view.date}}</p>
-        <p>내용 : {{view.content}}</p>
-      <div>
-          <router-link tag="button" type="button" to="../list">목록</router-link>
-          <router-link tag="button" type="button" :to="`./update/${view.idx}`">수정</router-link>
-          <button type="button" @click="boardDelete">삭제</button>
-      </div>
+    <template v-if="update != null">
+      <form action="" method="post">
+        <input type="hidden" name="action" value="update">
+        <input type="text" name="writer" v-model="update.writer" required><br>
+        <input type="text" name="subject" v-model="update.subject" required><br>
+        <textarea name="content" cols="30" rows="10" v-model="update.content" required></textarea><br>
+        <button type="submit">글수정</button>
+      </form>
     </template>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'BoardList',
+  name: 'BoardUpdate',
   data () {
     return {
-      view: null
+      update: null
     }
   },
   created () {
     const _this = this
-    fetch(`http://127.0.0.1:3000/board/view/${_this.$route.params.idx}`)
+    fetch(`http://127.0.0.1:3000/board/update/${_this.$route.params.idx}`)
       .then(response => {
         return response.json()
       })
       .then(json => {
         if (json.length) {
-          _this.view = json[0]
+          _this.update = json[0]
         }
+      })
+      .then(res => res.json())
+      .then(json => {
+        console.log(json)
+        alert('글이 수정되었습니다.')
+        _this.$router.push(`./view/${_this.$route.params.idx}`)
       })
       .catch(error => {
         console.log(error)
       })
-  },
-  methods: {
-    boardDelete (event) {
-      alert('test')
-      event.preventDefault()
-    }
   }
 }
 </script>
