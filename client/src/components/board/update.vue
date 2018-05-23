@@ -3,8 +3,8 @@
     <h1>글 수정 페이지</h1>
     <hr>
     <template v-if="update != null">
-      <form action="" method="post">
-        <input type="hidden" name="action" value="update">
+      <form action="/board/update" method="post" @submit="boardUpdate">
+        <input type="hidden" name="idx" v-model="update.idx">
         <input type="text" name="writer" v-model="update.writer" required><br>
         <input type="text" name="subject" v-model="update.subject" required><br>
         <textarea name="content" cols="30" rows="10" v-model="update.content" required></textarea><br>
@@ -19,7 +19,11 @@ export default {
   name: 'BoardUpdate',
   data () {
     return {
-      update: null
+      update: null,
+      writer: '',
+      subject: '',
+      content: '',
+      idx: ''
     }
   },
   created () {
@@ -42,6 +46,35 @@ export default {
       .catch(error => {
         console.log(error)
       })
+  },
+  methods: {
+    boardUpdate (e) {
+      e.preventDefault()
+      const url = 'http://localhost:3000/board/update'
+      const frm = e.target
+      const _this = this
+      fetch(url, {
+        method: 'POST',
+        body: JSON.stringify({
+          writer: frm.writer.value,
+          subject: frm.subject.value,
+          content: frm.content.value,
+          idx: frm.idx.value
+        }),
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        })
+      })
+        .then(res => res.json())
+        .then(json => {
+          console.log(json)
+          alert('게시글이 수정되었습니다.')
+          _this.$router.push(`/board/view/${_this.$route.params.idx}`)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
   }
 }
 </script>
