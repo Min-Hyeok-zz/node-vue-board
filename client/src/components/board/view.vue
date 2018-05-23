@@ -10,7 +10,10 @@
       <div>
           <router-link tag="button" type="button" to="../list">목록</router-link>
           <router-link tag="button" type="button" :to="`/board/update/${view.idx}`">수정</router-link>
-          <router-link tag="button" type="button" :to="`/board/delete/${view.idx}`">삭제</router-link>
+          <form action="" method="post" @submit="boardDelete">
+            <input type="hidden" name="idx" v-model="view.idx">
+            <button type="submit">삭제</button>
+          </form>
       </div>
     </template>
   </div>
@@ -26,7 +29,7 @@ export default {
   },
   created () {
     const _this = this
-    fetch(`http://127.0.0.1:3000/board/view/${_this.$route.params.idx}`)
+    fetch(`http://localhost:3000/board/view/${_this.$route.params.idx}`)
       .then(response => {
         return response.json()
       })
@@ -40,9 +43,29 @@ export default {
       })
   },
   methods: {
-    boardDelete (event) {
-      alert('test')
-      event.preventDefault()
+    boardDelete (e) {
+      e.preventDefault()
+      const url = 'http://localhost:3000/board/delete'
+      const frm = e.target
+      const _this = this
+      fetch(url, {
+        method: 'POST',
+        body: JSON.stringify({
+          idx: frm.idx.value
+        }),
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        })
+      })
+        .then(res => res.json())
+        .then(json => {
+          console.log(json)
+          alert('게시글이 삭제되었습니다.')
+          _this.$router.push(`/board/list`)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 }
