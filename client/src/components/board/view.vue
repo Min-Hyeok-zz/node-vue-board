@@ -7,6 +7,7 @@
         <p>작성자 : {{view.writer}}</p>
         <p>작성일 : {{view.date}}</p>
         <p>내용 : {{view.content}}</p>
+        <p>조회수 : {{view.hit}}</p>
       <div>
           <router-link tag="button" type="button" to="../list">목록</router-link>
           <router-link tag="button" type="button" :to="`/board/update/${view.idx}`">수정</router-link>

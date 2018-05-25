@@ -27,54 +27,31 @@ module.exports = (app,fs) =>{
 		con.query(sql,(err,results) =>{
 			res.json(results)
 		})
-  })
-  	//로그인 페이지
-	app.get('/login',(req,res) =>{
-		res.render("login",{
-			title:"로그인 페이지",
-		})
-  	})
-
-	//회원가입 페이지
-	app.get('/join',(req,res) =>{
-		res.render("join",{
-		title:"회원가입 페이지"
-		})
-	})
+		con.query(`update board set hit=hit+1 where idx='${idx}'`)
+    })
 
 	//회원가입 처리
-	app.post('/join',(req,res) =>{
-		const mb_id = req.body.mb_id
-		const mb_pw = req.body.mb_pw
-		const mb_name = req.body.mb_name
-		const sql = `select count(*) from member where id='${mb_id}'`
-		con.query(sql , (err,results,field) => {
-			if (results[0]['count(*)'] > 0){
-				res.send('<script>alert("중복된 아이디 입니다.")</script>')
-				return false
-			} else{
-				const ins = `insert into member SET id='${mb_id}',pw='${mb_pw}', name='${mb_name}'`
-				con.query(ins,(err,results,field) => {
-					res.send('<script>alert("회원가입이 완료되었습니다.")</script>')
-				})
+	app.post('/member/add',(req,res) =>{
+		const id = req.body.id
+		const pw = req.body.pw
+		const name = req.body.name
+		const chk = `select count(*) from member where id='${id}'`
+		const sql = `insert into member set id='${id}',pw='${pw}',name='${name}'`
+		con.query(chk , (err,results,field) => {
+			res.json(results)
+			if(results[0]['count(*)'] == 0){
+				con.query(sql)
 			}
 		})
 	})
 	
 	//로그인 처리
-	app.post('/login',(req,res) =>{
-		const mb_id = req.body.mb_id
-		const mb_pw = req.body.mb_pw
-		const sql = `select * from member where id='${mb_id}' and pw='${mb_pw}'`
+	app.post('/member/login',(req,res) =>{
+		const id = req.body.id
+		const pw = req.body.pw
+		const sql = `select * from member where id='${id}' and pw='${pw}'`
 		con.query(sql, (err,results,field) => {
-			if (results[0] == undefined) {
-				res.send('<script>alert("아이디 또는 비밀번호가 일치하지 않습니다.")</script>')
-				return false
-			} else{
-				sess = req.body
-				sess.username = results[0]['name']
-				res.send('<script>alert("로그인 되었습니다.")</script>')
-			}
+			res.json(results)
 		})
 	})
 
