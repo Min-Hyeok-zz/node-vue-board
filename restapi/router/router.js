@@ -51,6 +51,7 @@ module.exports = (app,fs) =>{
 		const pw = req.body.pw
 		const sql = `select * from member where id='${id}' and pw='${pw}'`
 		con.query(sql, (err,results,field) => {
+			console.log(results)
 			res.json(results)
 		})
 	})

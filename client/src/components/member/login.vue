@@ -6,23 +6,22 @@
        <input type="text" name="id" placeholder="아이디(이메일)" required><br>
        <input type="password" name="pw" placeholder="비밀번호" required><br>
        <button type="submit">로그인</button>
-       <p>{{name}}</p>
     </form>
   </div>
 </template>
 
 <script>
 export default {
-  name: '',
   data () {
     return {
       id: '',
       pw: ''
     }
   },
-  computed: {
-    name: function () {
-      return this.$store.state.name
+  created () {
+    if (this.$store.state.isMember) {
+      alert('이미 로그인 하셨습니다')
+      this.$router.go(-1)
     }
   },
   methods: {
@@ -43,12 +42,9 @@ export default {
       })
         .then(res => res.json())
         .then(json => {
-          const chk = json[0]
-          const name = json[0]['name']
-          console.log(chk)
-          if (chk) {
+          if (json) {
             alert('로그인 되었습니다.')
-            _this.$store.commit('nameSet', name)
+            _this.$store.commit('login', json)
             _this.$router.push('/')
           } else {
             alert('아이디 또는 비밀번호가 일치하지 않습니다.')
