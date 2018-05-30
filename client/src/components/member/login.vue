@@ -42,7 +42,7 @@ export default {
       })
         .then(res => res.json())
         .then(json => {
-          if (json) {
+          if (json.length > 0) {
             alert('로그인 되었습니다.')
             _this.$store.commit('login', json)
             _this.$router.push('/')

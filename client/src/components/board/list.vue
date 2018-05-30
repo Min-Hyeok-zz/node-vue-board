@@ -1,7 +1,9 @@
 <template>
   <div class="hello">
     <h1>게시글 목록</h1>
-    <router-link to="./add">글작성</router-link>
+    <div v-if="this.$store.state.isMember">
+      <router-link to="./add">글작성</router-link>
+    </div>
     <ul v-if="this.list.length > 0">
         <li v-for="data in list" :key="data.idx">
             {{data.idx}} /

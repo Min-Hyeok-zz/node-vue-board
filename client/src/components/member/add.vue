@@ -3,8 +3,8 @@
     <h1>회원가입 페이지</h1>
     <hr>
     <form action="" method="post" @submit="memberAdd">
-       <input type="text" name="id" placeholder="아이디(이메일)" required minlength="3" pattern="^([a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+)$"><br>
-       <input type="password" name="pw" placeholder="비밀번호" minlength="3" required><br>
+       <input type="text" name="id" placeholder="아이디(이메일)" required><br>
+       <input type="password" name="pw" placeholder="비밀번호" required><br>
        <input type="text" name="name" placeholder="이름" required><br>
        <button type="submit">회원가입</button>
     </form>

@@ -3,7 +3,7 @@
     <h1>글 작성 페이지</h1>
     <hr>
     <form action="" method="post" @submit="boardAdd">
-       <input type="text" name="writer" placeholder="작성자" :value="writer"><br>
+       <input type="text" name="writer" placeholder="작성자" :value="writer" readonly><br>
        <input type="text" name="subject" placeholder="글제목" :value="subject"><br>
        <textarea name="content" cols="30" rows="10" placeholder="글내용" v-html="content" /><br>
        <button type="submit">글작성</button>
@@ -15,9 +15,15 @@
 export default {
   data () {
     return {
-      writer: '',
+      writer: this.$store.state.member[0]['name'],
       subject: '',
       content: ''
+    }
+  },
+  created () {
+    if (!this.$store.state.isMember) {
+      alert('로그인 후 이용 해 주세요')
+      this.$router.go(-1)
     }
   },
   methods: {
